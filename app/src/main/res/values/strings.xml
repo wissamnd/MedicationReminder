@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Medication Reminder</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_medications">Medications</string>
+    <string name="title_account">Account</string>
+    <string name="add_medication">Add Medication</string>
+    <string name="edit">Edit</string>
+    <string name="delete">DELETE</string>
+    <string name="server_client_id">561597209977-kur3ui3b21ihqollsj6vpaub9485jlr6.apps.googleusercontent.com</string>
+</resources>

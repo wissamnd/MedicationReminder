@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "561597209977",
+    "firebase_url": "https://cmps927nmedicationreminder.firebaseio.com",
+    "project_id": "cmps927nmedicationreminder",
+    "storage_bucket": "cmps927nmedicationreminder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561597209977:android:0c135120244419be4223a8",
+        "android_client_info": {
+          "package_name": "com.example.cmps927nmedicationreminder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561597209977-6fv78hhauktja3srqo21pvnh7gbf3o5c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cmps927nmedicationreminder",
+            "certificate_hash": "9f9320b1987e983e797759cf910b9c5dda15642d"
+          }
+        },
+        {
+          "client_id": "561597209977-p5b1g82ana2hskr4q71t3dvolrsoviud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz-47jDndDzRC-oicDuxrOJ4NuBuI0Ig8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561597209977-kur3ui3b21ihqollsj6vpaub9485jlr6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
