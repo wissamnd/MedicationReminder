@@ -12,6 +12,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -83,6 +84,5 @@ public class MainActivity extends AppCompatActivity {
         super .onStop() ;
         startService( new Intent( this, NotificationService. class )) ;
     }
-
 
 }

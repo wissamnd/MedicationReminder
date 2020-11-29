@@ -3,6 +3,7 @@ package com.example.cmps297nmedicationreminder.ui.medication;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cmps297nmedicationreminder.AddMedicationActivity;
 import com.example.cmps297nmedicationreminder.MedicationDetailsActivity;
@@ -27,21 +30,19 @@ public class MedicationsFragment extends Fragment {
 
 
     private ArrayList<MedicationItem> medicationsList = new ArrayList<>();
-
+    private MedicationItemAdapter medicationItemAdapter;
     public static final String EXTRA_MEDICATION_ITEM = "MEDICATION_ITEM";
     public static final Integer DELETE_REQUEST_CODE = 114;
     public static final Integer ADD_REQUEST_CODE = 111;
-
-    public MedicationItemAdapter medicationItemAdapter;
+    private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        final View root = inflater.inflate(R.layout.fragment_medicatiions, container, false);
+        final View root = inflater.inflate(R.layout.fragment_medications, container, false);
+
         retrieveMedications(); // retrieves medications from database
-        ListView listView = root.findViewById(R.id.list_view_medications);
-        medicationItemAdapter = new MedicationItemAdapter(medicationsList,getContext());
-        listView.setAdapter(medicationItemAdapter);
+
 
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,16 +53,27 @@ public class MedicationsFragment extends Fragment {
             }
         });
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        // Create recycler view.
+        recyclerView = root.findViewById(R.id.recyclable_view);
+        // Create an adapter and supply the data to be displayed.
+        medicationItemAdapter = new MedicationItemAdapter(getContext(), medicationsList);
+        // Connect the adapter with the recycler view.
+        recyclerView.setAdapter(medicationItemAdapter);
+        // Give the recycler view a default layout manager.
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+        medicationItemAdapter.setOnItemClickListener(new MedicationItemAdapter.ClickListener()  {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(View v, int position) {
                 Intent intent = new Intent(getActivity(), MedicationDetailsActivity.class);
                 intent.putExtra(EXTRA_MEDICATION_ITEM,medicationsList.get(position));
                 startActivityForResult(intent,DELETE_REQUEST_CODE);
-
             }
         });
+
+
 
 
         return root;
@@ -73,14 +85,15 @@ public class MedicationsFragment extends Fragment {
         if(requestCode == DELETE_REQUEST_CODE){
             if (resultCode == Activity.RESULT_OK){
                 medicationsList.clear();
-                medicationItemAdapter.clear();
                 retrieveMedications();
+                recyclerView.getAdapter().notifyDataSetChanged();
             }
         }else if (requestCode == ADD_REQUEST_CODE){
             if (resultCode == Activity.RESULT_OK){
                 medicationsList.clear();
-                medicationItemAdapter.clear();
                 retrieveMedications();
+                recyclerView.getAdapter().notifyDataSetChanged();
+
             }
         }
 
