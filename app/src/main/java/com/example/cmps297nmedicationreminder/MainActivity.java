@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseDatabase.getInstance().getReference().child("Programmingknowledge").child("android").setValue("abcd");
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -51,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         createRequest();
-
     }
 
     private void createRequest() {
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
+        FirebaseDatabase.getInstance().getReference().child("Programmingknowledge").child("android").setValue("abcd");
     }
 
     @Override
@@ -71,18 +72,21 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         stopService( new Intent( this, NotificationService. class )) ;
 
-
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null){
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
+
         }
+
     }
+
 
     @Override
     protected void onStop () {
         super .onStop() ;
         startService( new Intent( this, NotificationService. class )) ;
     }
+
 
 }
