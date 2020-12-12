@@ -45,16 +45,27 @@ public class LocalStorage {
     public static void removeMedicationItem(MedicationItem item){
         MEDICATION_ITEMS.remove(item);
         saveChangesToLocalStorage();
-
+        removeMedicationItemFromFirebase(item);
 
     }
+
+    public static void removeMedicationItemFromFirebase(MedicationItem item){
+        rootNode = FirebaseDatabase.getInstance();
+        rootNode.getReference().child("users/"+id).child(item.name).removeValue();
+
+    }
+
     public static void updateMedicationItem(MedicationItem item){
         MEDICATION_ITEMS.remove(item);
         MEDICATION_ITEMS.add(item);
         saveChangesToLocalStorage();
+        addMedicationItemToFirebase(item);
 
 
     }
+
+
+
 
     private static void saveChangesToLocalStorage(){
         SharedPreferences mPrefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME,Context.MODE_PRIVATE);
