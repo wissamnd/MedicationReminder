@@ -107,10 +107,11 @@ public class Login extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            String email = user.getEmail();
                             rootNode = FirebaseDatabase.getInstance();
+                            //adding user to firebase
                             rootNode.getReference().child("users").child(user.getUid()).child("name").setValue(user.getDisplayName());
-                            LocalStorage.email = email;
+                            //setting email and id in LocalStorage
+                            LocalStorage.email = user.getEmail();
                             LocalStorage.id= user.getUid();
                             LocalStorage.DisplayName= user.getDisplayName();
                             Intent intent = new Intent(Login.this, MainActivity.class);

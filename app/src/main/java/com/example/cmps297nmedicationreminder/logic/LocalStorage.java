@@ -126,8 +126,5 @@ public class LocalStorage {
 
     }
 
-//    public static void retrieveMedicationItemsFromLocalStorage(){
-//
-//
-//    }
+
 }
