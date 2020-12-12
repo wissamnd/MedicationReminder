@@ -35,6 +35,9 @@ import com.example.cmps297nmedicationreminder.logic.MedicationType;
 import com.example.cmps297nmedicationreminder.logic.OnceMedicationItem;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +45,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class AddMedicationActivity extends AppCompatActivity {
-
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
     Spinner spinnerType, spinnerFrequency;
     LinearLayout medicationsLinearLayout;
     TextInputEditText nameTextEdit, strengthTextEdit;
@@ -59,6 +63,8 @@ public class AddMedicationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_medication);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.add_medication);
+
+        rootNode = FirebaseDatabase.getInstance();
 
         nameTextEdit = findViewById(R.id.medication_name_add);
         strengthTextEdit = findViewById(R.id.medication_strength_add);

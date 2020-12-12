@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.Nullable;
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    public FirebaseDatabase rootNode;
+    public DatabaseReference reference;
 
     public String getDate(){
         String dateString = new SimpleDateFormat("EEE, MMM dd").format(new Date());
@@ -37,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseDatabase.getInstance().getReference().child("Programmingknowledge").child("android").setValue("abcd");
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -64,7 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        FirebaseDatabase.getInstance().getReference().child("Programmingknowledge").child("android").setValue("abcd");
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        rootNode = FirebaseDatabase.getInstance();
+        rootNode.getReference().child("users").child(user.getUid()).setValue(user.getDisplayName());
+
     }
 
     @Override
@@ -75,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null){
             Intent intent = new Intent(getApplicationContext(), Login.class);
+            intent.putExtra("user", user);
             startActivity(intent);
-
         }
 
     }

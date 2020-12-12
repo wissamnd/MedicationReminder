@@ -12,12 +12,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 
 
 public class LocalStorage {
-
+   // String user = (String) getIntent().getExtras().get("user");
+    private FirebaseAuth mAuth;
     public static Context context;
     public static ArrayList<MedicationItem> MEDICATION_ITEMS = new ArrayList<MedicationItem>();
     private static final String SHARED_PREFERENCES_NAME = "MEDICATION_ITEMS_PREFERENCES";
@@ -26,7 +28,9 @@ public class LocalStorage {
 
     public static void addMedicationItem(MedicationItem item){
         MEDICATION_ITEMS.add(item);
-        saveChangesToLocalStorage();
+      //  mAuth = FirebaseAuth.getInstance();
+
+      //  saveChangesToLocalStorage(user);
     }
 
     public static void removeMedicationItem(MedicationItem item){
