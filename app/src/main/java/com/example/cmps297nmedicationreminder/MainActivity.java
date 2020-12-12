@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
-    public FirebaseDatabase rootNode;
-    public DatabaseReference reference;
 
     public String getDate(){
         String dateString = new SimpleDateFormat("EEE, MMM dd").format(new Date());
@@ -66,13 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        FirebaseUser user = mAuth.getCurrentUser();
-        String email = user.getEmail();
-        rootNode = FirebaseDatabase.getInstance();
-        rootNode.getReference().child("users").child(user.getUid()).child("name").setValue(user.getDisplayName());
-        LocalStorage.email = email;
-        LocalStorage.id= user.getUid();
-        LocalStorage.DisplayName= user.getDisplayName();
 
     }
 
@@ -86,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), Login.class);
             intent.putExtra("user", user);
             startActivity(intent);
+
         }
 
     }

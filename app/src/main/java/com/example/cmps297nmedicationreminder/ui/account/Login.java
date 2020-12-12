@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.cmps297nmedicationreminder.MainActivity;
 import com.example.cmps297nmedicationreminder.R;
+import com.example.cmps297nmedicationreminder.logic.LocalStorage;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,12 +26,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Login extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
+    public FirebaseDatabase rootNode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +107,12 @@ public class Login extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String email = user.getEmail();
+                            rootNode = FirebaseDatabase.getInstance();
+                            rootNode.getReference().child("users").child(user.getUid()).child("name").setValue(user.getDisplayName());
+                            LocalStorage.email = email;
+                            LocalStorage.id= user.getUid();
+                            LocalStorage.DisplayName= user.getDisplayName();
                             Intent intent = new Intent(Login.this, MainActivity.class);
 
                             startActivity(intent);
