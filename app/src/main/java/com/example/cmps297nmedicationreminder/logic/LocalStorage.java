@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -12,25 +13,33 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 
 
 public class LocalStorage {
-   // String user = (String) getIntent().getExtras().get("user");
-    private FirebaseAuth mAuth;
+
     public static Context context;
     public static ArrayList<MedicationItem> MEDICATION_ITEMS = new ArrayList<MedicationItem>();
     private static final String SHARED_PREFERENCES_NAME = "MEDICATION_ITEMS_PREFERENCES";
     private static final String SHARED_PREFERENCES_ONCE_SET = "MEDICATION_ITEMS_ONCE_SET";
     private static final String SHARED_PREFERENCES_DAILY_SET = "MEDICATION_ITEMS_DAILY_SET";
+    public static String email;
+    public static String id;
+    public static String DisplayName;
+    private static FirebaseDatabase rootNode;
 
     public static void addMedicationItem(MedicationItem item){
         MEDICATION_ITEMS.add(item);
-      //  mAuth = FirebaseAuth.getInstance();
+        saveChangesToLocalStorage();
+        addMedicationItemToFirebase(item);
+    }
 
-      //  saveChangesToLocalStorage(user);
+    public static void addMedicationItemToFirebase(MedicationItem item){
+        rootNode = FirebaseDatabase.getInstance();
+        Gson gson = new Gson();
+        String json = gson.toJson(item);
+        rootNode.getReference().child("users/"+id).child(item.name).setValue(json);
     }
 
     public static void removeMedicationItem(MedicationItem item){

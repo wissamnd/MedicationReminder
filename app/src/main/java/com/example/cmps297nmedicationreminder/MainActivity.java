@@ -67,9 +67,12 @@ public class MainActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         FirebaseUser user = mAuth.getCurrentUser();
-
+        String email = user.getEmail();
         rootNode = FirebaseDatabase.getInstance();
-        rootNode.getReference().child("users").child(user.getUid()).setValue(user.getDisplayName());
+        rootNode.getReference().child("users").child(user.getUid()).child("name").setValue(user.getDisplayName());
+        LocalStorage.email = email;
+        LocalStorage.id= user.getUid();
+        LocalStorage.DisplayName= user.getDisplayName();
 
     }
 
