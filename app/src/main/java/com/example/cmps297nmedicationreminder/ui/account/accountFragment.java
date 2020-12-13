@@ -22,12 +22,16 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class accountFragment extends Fragment {
 
+    //Initialization of Views and Button
+
     private NotificationsViewModel notificationsViewModel;
     TextView userName, userEmail;
     Button logout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        //Loading Views Content
         notificationsViewModel =
                 ViewModelProviders.of(this).get(NotificationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_account, container, false);
@@ -36,6 +40,7 @@ public class accountFragment extends Fragment {
         userName = root.findViewById(R.id.userName);
         userEmail = root.findViewById(R.id.userEmail);
 
+        //Add Username and Email if Account successfully logged in
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getActivity().getApplicationContext());
         if(signInAccount != null){
             userName.setText(signInAccount.getDisplayName());
@@ -43,6 +48,7 @@ public class accountFragment extends Fragment {
 
         }
 
+        //Logout button Event Listener
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

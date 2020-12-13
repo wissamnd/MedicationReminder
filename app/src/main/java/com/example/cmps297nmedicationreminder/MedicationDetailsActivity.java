@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 public class MedicationDetailsActivity extends AppCompatActivity {
 
+    //TextViews and Button initialization
+
     TextView medicationType, medicationInstructions, medicationStrength,medicationRemindersText, medicationInstructionHeader;
     Button editButton, deleteButton;
 
@@ -34,6 +36,8 @@ public class MedicationDetailsActivity extends AppCompatActivity {
         final MedicationItem medicationItem = (MedicationItem) getIntent().getSerializableExtra(MedicationsFragment.EXTRA_MEDICATION_ITEM);
         getSupportActionBar().setTitle(medicationItem.name);
 
+        //Loading Views Content
+
         medicationType = findViewById(R.id.medication_item_detail_type);
         medicationType.setText(medicationItem.getMedicationType());
 
@@ -42,6 +46,9 @@ public class MedicationDetailsActivity extends AppCompatActivity {
 
         medicationRemindersText = findViewById(R.id.reminders_text);
 
+
+
+        //Once Medication View
 
         if(medicationItem instanceof OnceMedicationItem){
             OnceMedicationItem onceMedicationItem = (OnceMedicationItem) medicationItem;
@@ -52,6 +59,10 @@ public class MedicationDetailsActivity extends AppCompatActivity {
 
 
             medicationRemindersText.setText(text);
+
+
+            //Daily Medication View
+
         }else if (medicationItem instanceof  DailyMedicationItem){
             DailyMedicationItem  dailyMedicationItem= (DailyMedicationItem) medicationItem;
             String text = "Every Day\n";
@@ -76,6 +87,8 @@ public class MedicationDetailsActivity extends AppCompatActivity {
             medicationRemindersText.setText(text);
         }
 
+        //Medication Instruction logic
+
         medicationInstructionHeader = findViewById(R.id.instructions_header);
         medicationInstructions = findViewById(R.id.instructions_text);
         if(medicationItem.getInstruction().length() >0){
@@ -90,8 +103,10 @@ public class MedicationDetailsActivity extends AppCompatActivity {
             medicationInstructions.setVisibility(View.GONE);
         }
 
+        //Delete Button View
         deleteButton = findViewById(R.id.delete_medication_button);
 
+        //Delete Button Event Listener
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
